@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coink.Infrastructure", "Coi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coink.Presentation", "Coink.Presentation\Coink.Presentation.csproj", "{3E299C66-9BE0-455B-8DC7-7CCB9921FDD5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coink.Cross", "Coink.Cross\Coink.Cross.csproj", "{8D07D822-16C8-45F9-865B-37F5DEFDE19E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{3E299C66-9BE0-455B-8DC7-7CCB9921FDD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E299C66-9BE0-455B-8DC7-7CCB9921FDD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E299C66-9BE0-455B-8DC7-7CCB9921FDD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D07D822-16C8-45F9-865B-37F5DEFDE19E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D07D822-16C8-45F9-865B-37F5DEFDE19E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D07D822-16C8-45F9-865B-37F5DEFDE19E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D07D822-16C8-45F9-865B-37F5DEFDE19E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{525AB37F-66C0-44A5-A481-6E358E1F7D5C} = {0ECDA46E-02A0-4AF3-8E1E-86157BBE029D}
 		{38D89D8E-FAFD-4EEC-9CE3-5FE810490955} = {0ECDA46E-02A0-4AF3-8E1E-86157BBE029D}
 		{3E299C66-9BE0-455B-8DC7-7CCB9921FDD5} = {0ECDA46E-02A0-4AF3-8E1E-86157BBE029D}
+		{8D07D822-16C8-45F9-865B-37F5DEFDE19E} = {0ECDA46E-02A0-4AF3-8E1E-86157BBE029D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A70996AE-4C4A-4986-8EA6-E4DAF90F045F}

@@ -1,11 +1,12 @@
-﻿using Coink.Application.Interfaces;
+﻿using Coink.Application.Interfaces.Repository;
 using Coink.Infrastructure.Data;
 using Coink.Infrastructure.Repository;
-using Coink.Infrastructure.Security.Databases;
-using Coink.Infrastructure.Security.Token;
+using Coink.Cross.Security.Databases;
+using Coink.Cross.Security.Token;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Coink.Infrastructure.IoC;
@@ -34,16 +35,28 @@ public static class DependencyInjection
     private static IServiceCollection AddJwtConfig(this IServiceCollection services)
     {
         services.AddOptions<JwtCredentials>()
-                .BindConfiguration(nameof(JwtCredentials));
+                .BindConfiguration(nameof(JwtCredentials))
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
+
+        return services;
+    }
+
+    private static IServiceCollection AddDbConnection(this IServiceCollection services)
+    {
+        services.AddOptions<DbCredentials>()
+                .BindConfiguration(nameof(DbCredentials))
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
 
         return services;
     }
 
     private static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration config)
     {
-        services.AddDbContext<ApiDbContext>(db => db.UseNpgsql(config.GetConnectionString("DbCredentials:PostgreSql")))
+        services.AddDbContext<ApiDbContext>(db => db.UseNpgsql(config.GetSection("DbCredentials:PostgreSql").Value))
+                .AddScoped<IAuthRepository, TokenUserRepository>()
                 .AddScoped<IUserRepository, UserRepository>();
-        //services.AddScoped<IRepository, Repository>();
 
         return services;
     }

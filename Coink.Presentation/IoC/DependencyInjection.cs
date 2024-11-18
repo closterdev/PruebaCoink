@@ -1,10 +1,20 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Coink.Application.Interfaces.Services;
+using Coink.Application.Services;
+using Microsoft.OpenApi.Models;
 using System.Reflection;
 
 namespace Coink.Presentation.IoC;
 
+/// <summary>
+/// 
+/// </summary>
 public static class DependencyInjection
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
     public static IServiceCollection AddPresentation(this IServiceCollection services)
     {
         services.AddControllers();
@@ -18,7 +28,9 @@ public static class DependencyInjection
 
     private static IServiceCollection AddServices(this IServiceCollection services)
     {
-        //services.AddSingleton<IService, Service>();
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<ITokenService, TokenService>();
 
         return services;
     }

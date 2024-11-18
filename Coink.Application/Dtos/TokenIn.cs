@@ -1,8 +1,7 @@
-﻿namespace Coink.Domain.Entities;
+﻿namespace Coink.Application.Dtos;
 
-public class User
+public class TokenIn
 {
     public string Username { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
-    public bool IsActive { get; set; }
 }
