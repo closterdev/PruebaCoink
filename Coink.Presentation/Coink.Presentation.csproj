@@ -16,4 +16,9 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Coink.Application\Coink.Application.csproj" />
+    <ProjectReference Include="..\Coink.Infrastructure\Coink.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

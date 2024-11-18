@@ -1,8 +1,13 @@
+using Coink.Presentation.IoC;
+using Coink.Application.IoC;
+using Coink.Infrastructure.IoC;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services
+    .AddPresentation()
+    .AddApplication()
+    .AddInfrastructure();
 
 var app = builder.Build();
 
@@ -13,7 +18,5 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
