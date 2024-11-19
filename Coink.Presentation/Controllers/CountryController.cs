@@ -2,8 +2,13 @@
 
 namespace Coink.Presentation.Controllers;
 
-[Route("api/[controller]")]
+/// <summary>
+/// Controller by countries manage
+/// </summary>
 [ApiController]
+[ApiExplorerSettings(IgnoreApi = true)]
+[Produces("application/json")]
+[Route("api/[controller]")]
 public class CountryController : ControllerBase
 {
     // GET: api/<CountryController>

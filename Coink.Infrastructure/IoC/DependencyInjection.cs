@@ -20,7 +20,6 @@ public static class DependencyInjection
                 .AddPersistence(config)
                 .AddJwtAuthentication()
                 .AddJwtAuthorization();
-                //.AddChecks();
 
         return services;
     }
@@ -78,16 +77,4 @@ public static class DependencyInjection
 
         return services;
     }
-
-    //private static IServiceCollection AddChecks(this IServiceCollection services)
-    //{
-    //    services.AddHealthChecks()
-    //            .AddNpgSql(sp =>
-    //                sp.GetRequiredService<IOptions<DbCredentials>>().Value.PostgreSql,
-    //                name: "PostgreSQL", 
-    //                tags: ["database", "critical"]
-    //            );
-
-    //    return services;
-    //}
 }

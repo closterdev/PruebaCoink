@@ -1,5 +1,7 @@
 ﻿using Coink.Application.Dtos;
 using Coink.Application.Interfaces.Services;
+using Coink.Domain.Entities.Controllers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Coink.Presentation.Controllers;
@@ -8,21 +10,39 @@ namespace Coink.Presentation.Controllers;
 /// Controller by user manage
 /// </summary>
 /// <param name="userService"></param>
+[AllowAnonymous]
 [ApiController]
+[ApiExplorerSettings(IgnoreApi = false)]
+//[Authorize]
 [Produces("application/json")]
 [Route("api/[controller]")]
 public class UserController(IUserService userService) : ControllerBase
 {
     private readonly IUserService _userService = userService;
 
-    // GET: api/<UserController>
+    /// <summary>
+    /// Get all users items
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
-    public IEnumerable<string> Get()
+    public async Task<ActionResult<IEnumerable<User>>> GetUsers()
     {
-        return new string[] { "value1", "value2" };
+        try
+        {
+            var users = await _userService.GetAllUsersAsync();
+            return Ok(users);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
-    // GET api/<UserController>/5
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
     public string Get(int id)
     {
@@ -39,7 +59,7 @@ public class UserController(IUserService userService) : ControllerBase
     {
         try
         {
-            await _userService.CreateUser(request);
+            await _userService.CreateUserAsync(request);
             return Ok("Usuario registrado exitosamente.");
         }
         catch (ArgumentException ex)
@@ -56,13 +76,11 @@ public class UserController(IUserService userService) : ControllerBase
         }
     }
 
-    // PUT api/<UserController>/5
     [HttpPut("{id}")]
     public void Put(int id, [FromBody] string value)
     {
     }
 
-    // DELETE api/<UserController>/5
     [HttpDelete("{id}")]
     public void Delete(int id)
     {

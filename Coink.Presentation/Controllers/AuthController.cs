@@ -1,6 +1,5 @@
 ﻿using Coink.Application.Interfaces.Services;
 using Coink.Application.Dtos;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Coink.Presentation.Controllers;
@@ -12,9 +11,10 @@ namespace Coink.Presentation.Controllers;
 /// Constructor method
 /// </remarks>
 /// <param name="authService"></param>
-[Route("api/[controller]")]
 [ApiController]
-[AllowAnonymous]
+[ApiExplorerSettings(IgnoreApi = false)]
+[Produces("application/json")]
+[Route("api/[controller]")]
 public class AuthController(IAuthService authService) : ControllerBase
 {
     private readonly IAuthService _authService = authService;

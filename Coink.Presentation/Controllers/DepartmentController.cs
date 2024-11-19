@@ -1,9 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
 
 namespace Coink.Presentation.Controllers;
 
-[Route("api/[controller]")]
+/// <summary>
+/// Controller by departments manage
+/// </summary>
 [ApiController]
+[ApiExplorerSettings(IgnoreApi = true)]
+[Produces("application/json")]
+[Route("api/[controller]")]
 public class DepartmentController : ControllerBase
 {
     // GET: api/<DepartmentController>

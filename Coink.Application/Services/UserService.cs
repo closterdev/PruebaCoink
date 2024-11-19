@@ -10,7 +10,7 @@ public class UserService(IUserRepository repository, IValidator<UserIn> validato
     private readonly IUserRepository _repository = repository;
     private readonly IValidator<UserIn> _validator = validator;
 
-    public async Task CreateUser(UserIn input)
+    public async Task CreateUserAsync(UserIn input)
     {
         var validationResult = _validator.Validate(input);
         if (!validationResult.IsValid)
@@ -19,6 +19,21 @@ public class UserService(IUserRepository repository, IValidator<UserIn> validato
             throw new ArgumentException($"Errores de validación: {errors}");
         }
 
-        await _repository.AddUser(input);
+        await _repository.AddUserAsync(input);
+    }
+
+    public async Task<List<UserIn>> GetAllUsersAsync()
+    {
+        var users = await _repository.GetUsersAsync();
+
+        return users.Select(u =>
+                new UserIn
+                {
+                    Name = u.Name,
+                    Phone = u.Phone,
+                    Address = u.Address,
+                    City_id = u.City_id
+                }
+            ).ToList();
     }
 }
