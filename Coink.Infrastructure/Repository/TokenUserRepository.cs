@@ -16,4 +16,10 @@ public class TokenUserRepository(ApiDbContext context) : IAuthRepository
             .Where(u => u.Username == userCredentials.Username)
             .FirstOrDefaultAsync();
     }
+
+    //public async Task AddUserAsync(TokenUser user)
+    //{
+    //    await _context.TokenUser.AddAsync(user);
+    //    await _context.SaveChangesAsync();
+    //}
 }

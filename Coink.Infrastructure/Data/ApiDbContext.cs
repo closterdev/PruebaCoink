@@ -20,6 +20,5 @@ public class ApiDbContext(DbContextOptions<ApiDbContext> options) : DbContext(op
         modelBuilder.Entity<Country>().HasNoKey();
         modelBuilder.Entity<Department>().HasNoKey();
         modelBuilder.Entity<User>().HasNoKey();
-
     }
 }

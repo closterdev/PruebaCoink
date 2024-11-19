@@ -20,6 +20,7 @@ public static class DependencyInjection
                 .AddPersistence(config)
                 .AddJwtAuthentication()
                 .AddJwtAuthorization();
+                //.AddChecks();
 
         return services;
     }
@@ -54,7 +55,9 @@ public static class DependencyInjection
 
     private static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration config)
     {
-        services.AddDbContext<ApiDbContext>(db => db.UseNpgsql(config.GetSection("DbCredentials:PostgreSql").Value))
+        services.AddDbContext<ApiDbContext>((sp, db) => 
+                    db.UseNpgsql(
+                        sp.GetRequiredService<IOptions<DbCredentials>>().Value.PostgreSql))
                 .AddScoped<IAuthRepository, TokenUserRepository>()
                 .AddScoped<IUserRepository, UserRepository>();
 
@@ -75,4 +78,16 @@ public static class DependencyInjection
 
         return services;
     }
+
+    //private static IServiceCollection AddChecks(this IServiceCollection services)
+    //{
+    //    services.AddHealthChecks()
+    //            .AddNpgSql(sp =>
+    //                sp.GetRequiredService<IOptions<DbCredentials>>().Value.PostgreSql,
+    //                name: "PostgreSQL", 
+    //                tags: ["database", "critical"]
+    //            );
+
+    //    return services;
+    //}
 }

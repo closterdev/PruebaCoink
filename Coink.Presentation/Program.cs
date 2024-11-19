@@ -17,6 +17,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("AllowCors");
 app.UseAuthorization();
 app.MapControllers();
+app.MapHealthChecks("/api/health");
 app.Run();

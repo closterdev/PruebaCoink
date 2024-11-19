@@ -1,11 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Coink.Application.Dtos;
+using Coink.Application.Interfaces.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Coink.Presentation.Controllers;
 
-[Route("api/[controller]")]
+/// <summary>
+/// Controller by user manage
+/// </summary>
+/// <param name="userService"></param>
 [ApiController]
-public class UserController : ControllerBase
+[Produces("application/json")]
+[Route("api/[controller]")]
+public class UserController(IUserService userService) : ControllerBase
 {
+    private readonly IUserService _userService = userService;
+
     // GET: api/<UserController>
     [HttpGet]
     public IEnumerable<string> Get()
@@ -20,10 +29,31 @@ public class UserController : ControllerBase
         return "value";
     }
 
-    // POST api/<UserController>
+    /// <summary>
+    /// Add a new user item
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     [HttpPost]
-    public void Post([FromBody] string value)
+    public async Task<IActionResult> CreateUser([FromBody] UserIn request)
     {
+        try
+        {
+            await _userService.CreateUser(request);
+            return Ok("Usuario registrado exitosamente.");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (ApplicationException ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "Ocurrió un error inesperado.");
+        }
     }
 
     // PUT api/<UserController>/5

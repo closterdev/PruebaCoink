@@ -1,3 +1,6 @@
 ﻿namespace Coink.Cross.Security.Databases;
 
-public record DbCredentials(string PostgreSql);
+public class DbCredentials
+{
+    public string PostgreSql { get; set; } = string.Empty;
+}

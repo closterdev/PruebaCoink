@@ -1,8 +1,8 @@
-﻿using Coink.Domain.Entities.Controllers;
+﻿using Coink.Application.Dtos;
 
 namespace Coink.Application.Interfaces.Services;
 
 public interface IUserService
 {
-    Task<bool> CreateUser(User user);
+    Task CreateUser(UserIn user);
 }

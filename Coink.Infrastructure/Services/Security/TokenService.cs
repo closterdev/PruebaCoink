@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 using Coink.Cross.Security.Token;
 using Coink.Application.Interfaces.Services;
 
-namespace Coink.Application.Services;
+namespace Coink.Infrastructure.Services.Security;
 
 public class TokenService(IOptions<JwtCredentials> setting) : ITokenService
 {

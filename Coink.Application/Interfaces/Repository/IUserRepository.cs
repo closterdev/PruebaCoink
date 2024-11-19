@@ -1,8 +1,8 @@
-﻿using Coink.Domain.Entities.Controllers;
+﻿using Coink.Application.Dtos;
 
 namespace Coink.Application.Interfaces.Repository;
 
 public interface IUserRepository
 {
-    Task<bool> InsertUser(User User);
+    Task AddUser(UserIn User);
 }

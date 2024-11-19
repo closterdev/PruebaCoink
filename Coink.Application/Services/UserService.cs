@@ -1,27 +1,24 @@
-﻿using Coink.Application.Interfaces.Repository;
+﻿using Coink.Application.Dtos;
+using Coink.Application.Interfaces.Repository;
 using Coink.Application.Interfaces.Services;
-using Coink.Domain.Entities.Controllers;
+using FluentValidation;
 
 namespace Coink.Application.Services;
 
-public class UserService : IUserService
+public class UserService(IUserRepository repository, IValidator<UserIn> validator) : IUserService
 {
-    private readonly IUserRepository _repository;
+    private readonly IUserRepository _repository = repository;
+    private readonly IValidator<UserIn> _validator = validator;
 
-    public UserService(IUserRepository repository)
+    public async Task CreateUser(UserIn input)
     {
-        _repository = repository;
-    }
-
-    public async Task<bool> CreateUser(User user)
-    {
-        if (string.IsNullOrWhiteSpace(user.Name) ||
-            string.IsNullOrWhiteSpace(user.Phone) ||
-            string.IsNullOrWhiteSpace(user.Address))
+        var validationResult = _validator.Validate(input);
+        if (!validationResult.IsValid)
         {
-            throw new ArgumentException("Los campos nombre, teléfono y dirección son obligatorios.");
+            var errors = string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage));
+            throw new ArgumentException($"Errores de validación: {errors}");
         }
 
-        return await _repository.InsertUser(user);
+        await _repository.AddUser(input);
     }
 }

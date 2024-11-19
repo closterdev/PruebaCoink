@@ -1,5 +1,8 @@
 ﻿using Coink.Application.Interfaces.Services;
 using Coink.Application.Services;
+using Coink.Cross.Security.Databases;
+using Coink.Infrastructure.Services.Security;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
@@ -18,19 +21,35 @@ public static class DependencyInjection
     public static IServiceCollection AddPresentation(this IServiceCollection services)
     {
         services.AddControllers();
-        services.AddServices();
-        services.AddEndpointsApiExplorer();
-        services.AddSwagger();
-        services.AddProblemDetails();
+
+        services.AddEndpointsApiExplorer()
+                .AddCorsCustom()
+                .AddServices()
+                .AddSwagger()
+                .AddProblemDetails()
+                .AddChecks();
+
+        return services;
+    }
+
+    private static IServiceCollection AddCorsCustom(this IServiceCollection services)
+    {
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowCors", policy =>
+                policy.WithOrigins("*")
+                      .AllowAnyMethod()
+                      .AllowAnyHeader());
+        });
 
         return services;
     }
 
     private static IServiceCollection AddServices(this IServiceCollection services)
     {
-        services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IAuthService, AuthService>();
-        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IUserService, UserService>()
+                .AddScoped<IAuthService, AuthService>()
+                .AddScoped<ITokenService, TokenService>();
 
         return services;
     }
@@ -84,6 +103,18 @@ public static class DependencyInjection
                 }
             });
         });
+
+        return services;
+    }
+
+    private static IServiceCollection AddChecks(this IServiceCollection services)
+    {
+        services.AddHealthChecks()
+                .AddNpgSql(sp =>
+                    sp.GetRequiredService<IOptions<DbCredentials>>().Value.PostgreSql,
+                    name: "PostgreSQL",
+                    tags: ["database", "critical"]
+                );
 
         return services;
     }
