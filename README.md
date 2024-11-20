@@ -65,7 +65,7 @@ El proyecto sigue la arquitectura en capas **Clean Architecture**, organizada de
 
 2. **Configuración del entorno**:
    - Configurar las siguientes variables de entorno:
-     - `ConnectionStrings:PostgresConnection`: Cadena de conexión a PostgreSQL.
+     - `DbCredentials:PostgreSql`: Cadena de conexión a PostgreSQL.
    - Asegúrate de que PostgreSQL esté en ejecución y que tengas creada una base de datos.
 
 3. **Dependencias del proyecto**:
@@ -74,12 +74,12 @@ El proyecto sigue la arquitectura en capas **Clean Architecture**, organizada de
    
 ---
 
-Ejecución Local
-
-   git clone https://github.com/usuario/proyecto.git
+## Ejecución Local
+```bash
+   git clone https://github.com/closterdev/PruebaCoink.git
    cd proyecto
 
-CREATE DATABASE gestion_usuarios;
+CREATE DATABASE dbcoink;
 \c gestion_usuarios;
 -- Agregar aquí los scripts de creación de tablas y SP.
 
